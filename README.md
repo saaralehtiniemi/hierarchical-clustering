@@ -39,9 +39,8 @@ Or
 
 It should be noted that only the numerical data is used in the clustering, so columns with text-data will be dropped. Also, rows with `Nan`-values will be dropped.
 
-If a column give by the  `class_column` is not found in the data, the script will not use any class labels. The `class_column` can contain either labels or encoded numerically. If the column contains text-labels, they will be visible in the images too.
-
-You can give multiple datafiles and class labels at the same time. 
+If a column give by the  `class_column` is not found in the data, the script will not use any class labels. If you use a headerless `file` and want to use labels, use the order number of the column (from 1 to the number of columns).
+The `class_column` can contain either labels or encoded numerically. If the column contains text-labels, they will be visible in the images too. You can give multiple datafiles and class labels at the same time. 
 
 ### USAGE
 Here are some examples of usage:
@@ -66,3 +65,8 @@ Two datasets named `data1.csv` and `data2.csv`, labels in column named `A` and `
 ```
 python3 -u main.py data1.csv,data2.csv --class_column A,B
 ```
+One headerless dataset named `data.csv`, labels in column 1.
+```
+python3 -u main.py data.csv --class_column 1
+```
+

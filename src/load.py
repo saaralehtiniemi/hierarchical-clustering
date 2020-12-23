@@ -14,7 +14,7 @@ def loadDataFile(PATH, column):
             df.loc[-1] = df.columns.astype(float)  # adding a row
             df.index = df.index + 1  # shifting index
             df = df.sort_index() 
-            df.columns = np.arange(0, df.shape[1])
+            df.columns = np.arange(1, df.shape[1]+1)
     except:
         print("\tChoose valid data file")
     # if class column is specified, make that column the index of the dataframe
