@@ -28,15 +28,14 @@ The `file` doesn't need to contain a header, but the data or header needs to sta
 
 | sepal_length | sepal_width | petal_length | petal_width | species |
 | --- | --- | --- | --- | --- |
-| 5.1 | 3.5 | 1.4 | 0.2 | setosa |
-| 4.9 | 3.0 | 1.4 | 0.2 | setosa |
+| __5.1__ | __3.5__ | __1.4__ | __0.2__ | __setosa__ |
+| __4.9__ | __3.0__ | __1.4__ | __0.2__ | __setosa__ |
 
 Or
 
-|  |  |  |  |  |
-| --- | --- | --- | --- | --- |
 | 5.1 | 3.5 | 1.4 | 0.2 | setosa |
-| 4.9 | 3.0 | 1.4 | 0.2 | setosa |
+| --- | --- | --- | --- | --- |
+| __4.9__ | __3.0__ | __1.4__ | __0.2__ | __setosa__ |
 
 It should be noted that only the numerical data is used in the clustering, so columns with text-data will be dropped. Also, rows with `Nan`-values will be dropped.
 
