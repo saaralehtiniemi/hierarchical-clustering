@@ -19,23 +19,23 @@ python3 src/main.py --help
 ### PARAMETERS
 The script uses the parameters:
 ```
-file						(REQUIRED) The dataset used for the clustering
---output					(OPTIONAL) The folder the results will be placed, by default "results"
+file					(REQUIRED) The dataset used for the clustering
+--output				(OPTIONAL) The folder the results will be placed, by default "results"
 --class_column		(OPTIONAL) If desired, you can specify the column in the file which is used as class labels
 ```
 
 The `file` doesn't need to contain a header. So the data could look like, for example (The iris dataset, from https://archive.ics.uci.edu/ml/datasets/Iris):
 
 | sepal_length | sepal_width | petal_length | petal_width | species |
+| --- | --- | --- | --- | --- |
 | 5.1 | 3.5 | 1.4 | 0.2 | setosa |
 | 4.9 | 3.0 | 1.4 | 0.2 | setosa |
 | 4.7 | 3.2 | 1.3 | 0.2 | setosa |
 | 4.6 | 3.1 | 1.5 | 0.2 | setosa |
 | 5.0 | 3.6 | 1.4 | 0.2 | setosa |
 ...
-
 Or
-
+| --- | --- | --- | --- | --- |
 | 5.1 | 3.5 | 1.4 | 0.2 | setosa |
 | 4.9 | 3.0 | 1.4 | 0.2 | setosa |
 | 4.7 | 3.2 | 1.3 | 0.2 | setosa |
