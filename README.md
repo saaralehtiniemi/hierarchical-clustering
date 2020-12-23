@@ -33,15 +33,17 @@ The `file` doesn't need to contain a header. So the data could look like, for ex
 | 4.7 | 3.2 | 1.3 | 0.2 | setosa |
 | 4.6 | 3.1 | 1.5 | 0.2 | setosa |
 | 5.0 | 3.6 | 1.4 | 0.2 | setosa |
+
 ...
 Or
+
+|  |  |  |  |  |
 | --- | --- | --- | --- | --- |
 | 5.1 | 3.5 | 1.4 | 0.2 | setosa |
 | 4.9 | 3.0 | 1.4 | 0.2 | setosa |
 | 4.7 | 3.2 | 1.3 | 0.2 | setosa |
 | 4.6 | 3.1 | 1.5 | 0.2 | setosa |
 | 5.0 | 3.6 | 1.4 | 0.2 | setosa |
-...
 
 It should be noted that only the numerical data is used in the clustering, so columns with text-data will be dropped. Also, rows with `Nan`-values will be dropped.
 
