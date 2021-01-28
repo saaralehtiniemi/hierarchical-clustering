@@ -9,7 +9,7 @@ def clusterNumberTest(n_clusters, affs, links, cdict, **kwargs):
     print("--- TESTING DIFFERRENT CLUSTER SIZES ---")
     # generate the dataframe where scores are stored
     # data for scores: initialize index, where index is
-    # k=number of clusters, links=linkage, affs=affinity
+    # k=number of clusters, links=linkage, affs=distance measure
     n = min(kwargs["X"].shape[0]-1, n_clusters+10)
     iterables = [range(2, n), links, affs]
     clust_idx = pd.MultiIndex.from_product(iterables, names=['k', 'links', 'affs'])
@@ -36,7 +36,7 @@ def clusterNumberTest(n_clusters, affs, links, cdict, **kwargs):
         k, l, a = best_scores
         kwargs["title"] = str(k)
         plot.plotDendrogram(k, l, a, cdict, **kwargs)
-        # do a confusion matrix only if class labels are used
+        # do a confusion matrix only if cluster labels are used
         if str(kwargs.get('class_column', False)):
             df_b_clust = df_clust[np.logical_and(df_clust["n_clusters"] == k, df_clust["link-aff"] == l + "_" + a)]
             plot.plotConfusionMatrix(df_b_clust, **kwargs)

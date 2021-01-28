@@ -23,7 +23,7 @@ def plotDendrogram(n_clusters, link, aff, cdict, title, X, output, names, **kwar
     dist = shc.linkage(X, method=link, metric=aff, optimal_ordering=True)
     # select color threshold - used to color the dendrogram links in n_cluster-colors
     ct=dist[-(n_clusters-1), 2]
-    # get labels - either specified class labels or just the index (running numbers from 0 to len(X)
+    # get labels - either specified cluster labels or just the index (running numbers from 0 to len(X)
     lbl = X.index
     # do the dendrogram
     dend = shc.dendrogram(dist, labels=lbl, leaf_font_size=3, leaf_rotation=0, ax=ax, color_threshold=ct, distance_sort=False, show_leaf_counts=True, count_sort=False)
@@ -35,7 +35,7 @@ def plotDendrogram(n_clusters, link, aff, cdict, title, X, output, names, **kwar
     plt.ylabel("Distance")
     # color the leaves and if names have been specified, add legend
     
-    if str(kwargs.get('class_column', False)):
+    if str(kwargs.get('cluster_column', False)):
         # we need to write the labels for the legend manually 
         # initialize the lists needed
         custom_lines = []

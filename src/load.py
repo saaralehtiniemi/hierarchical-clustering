@@ -4,23 +4,32 @@ from sklearn import preprocessing
 
 import os
 
+def is_number(string):
+    try:
+        float(string)
+        return True
+    except ValueError:
+        return False
+
 def loadDataFile(PATH, column):
     # load datafile
     print("Using data file {}".format(PATH))
     try:
-        df = pd.read_csv(PATH, sep=",", header=0)
-        no_header = any(cell.isdigit() for cell in df.columns)
-        if no_header:
-            df.loc[-1] = df.columns.astype(float)  # adding a row
+        df = pd.read_csv(PATH, sep=",", header=0)    
+        header_num = [ is_number(cell) for cell in df.columns ]
+        if any(header_num):
+            # change the numeric ones to floats
+            df.columns.values[header_num] = df.columns[header_num].astype(float) 
+            df.loc[-1] = df.columns # adding a row
             df.index = df.index + 1  # shifting index
             df = df.sort_index() 
             df.columns = np.arange(1, df.shape[1]+1)
     except:
         print("\tChoose valid data file")
-    # if class column is specified, make that column the index of the dataframe
+    # if cluster column is specified, make that column the index of the dataframe
     names = {}
     if column:
-        print("Using class column {}".format(column))
+        print("Using cluster column {}".format(column))
         if column.isdigit():
             column = int(column)
         try:
@@ -30,13 +39,16 @@ def loadDataFile(PATH, column):
                 names = df[column].astype('category').cat.codes.to_dict()
                 df.index = df[column].astype('category').cat.codes.values
                 names = dict(zip(names.values(), names.keys()))            
-            # drop the class column, since it affects the clustering
+            # drop the cluster column, since it affects the clustering
             df = df.drop(columns = column)
         except:
-            print("\tChoose valid class column") 
+            print("\tChoose valid cluster column") 
             column = ""
     
-    # return only the numeric data
+    # convert str data to categorical
+    
+    cat_columns = df.select_dtypes(['object']).columns
+    df[cat_columns] = df[cat_columns].apply(lambda x: x.astype("category").cat.codes)
     df = df.select_dtypes(include=np.number)
     df = df.dropna()
     

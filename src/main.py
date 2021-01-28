@@ -13,26 +13,29 @@ def main():
     parser = argparse.ArgumentParser(description='Hierachical Clustering')
     parser.add_argument('file', help='Choose data file', type=str)
     parser.add_argument('--output', help='Output folder for the results', default='results')
-    parser.add_argument('--class_column', help='Column in file which contains the classes', default="")
+    parser.add_argument('--cluster_column', help='Column in file which contains the clusters', default="")
     parser.add_argument('--n_plots', help='Number of plotted images', type=int, default=3)
     
     args = parser.parse_args()
     
+    on = args.file.count("../")
+    args.output = on * "../" + args.output
+    
     # go through given data files
-    # go through given class columns
-    cols = str(args.class_column).replace(" ", "").split(",") 
+    # go through given cluster columns
+    cols = str(args.cluster_column).replace(" ", "").split(",") 
     files = str(args.file).replace(" ", "").split(",")
-    # if less class_column values given, assume that the same column is used for all data files
+    # if less cluster_column values given, assume that the same column is used for all data files
     for i in range(len(files) - len(cols)):
         cols.append(cols[-1])
     output = args.output
     for i, file in enumerate(files):
-        args.X, args.class_column, args.names = load.loadDataFile(file, cols[i])
+        args.X, args.cluster_column, args.names = load.loadDataFile(file, cols[i])
         print("Size of the datafile: {}\n\t(Note: the more data there are, the longer the algorithm takes to run.)".format(args.X.shape[0]))  
         # create output folder: optionally specified folder + name of the data file
         title = str(file.split("/")[-1].split(".")[-2])
         args.title = (
-            title + "_" + str(args.class_column) if str(args.class_column)
+            title + "_" + str(args.cluster_column) if str(args.cluster_column)
             else title
         )
         args.output = output + "/" + args.title + "/"   
@@ -41,7 +44,7 @@ def main():
             os.makedirs(args.output)        
         #save the dataframe    
         args.X.to_csv(args.output + "DATA.csv")
-        
+
         # run model
         run_model(**vars(args))
         print("")
@@ -50,16 +53,16 @@ def run_model(**kwargs):
     '''
     clustering methods for the data
     '''      
-    idx = kwargs.get('X', False).index.unique() # select classes 
-    # the number of classes for clustering - if the classes are predefined, pass their number; otherwise 
+    idx = kwargs.get('X', False).index.unique() # select clusters 
+    # the number of clusters for clustering - if the clusters are predefined, pass their number; otherwise 
     n_clusters = (
-         len(idx) if str(kwargs.get('class_column', False))
+         len(idx) if str(kwargs.get('cluster_column', False))
         else min(int(len(idx)/5), 5)
     )
 
-    print("Number of classes: {}".format(len(idx)))
+    print("Number of clusters: {}".format(len(idx)))
     
-    # get unified colors for the classes
+    # get unified colors for the clusters
     cmap = mpl.cm.get_cmap('nipy_spectral') # selecting the nipy_spectral -colormap  
     norm = mpl.colors.Normalize(vmin=min(idx), vmax=max(idx)) # the colors values are normalized, so the colors we get are as different as possible
     cdict = {}   
@@ -67,7 +70,7 @@ def run_model(**kwargs):
         color = cmap(norm(idx[i]))
         cdict[str(idx[i])] = color # save the generated color to a dictionary
 
-    # initialize hierachical linkage and affinity
+    # initialize hierachical linkage and distance
     # options seen on https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html
     links = ['ward', 'complete', 'average', 'single']
     affs = ['euclidean', 'cityblock', 'cosine']

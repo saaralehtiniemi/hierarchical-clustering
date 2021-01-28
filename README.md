@@ -1,6 +1,6 @@
 # Hierarchical Clustering
 Clustering software for performing agglomerative hierarchical clustering. 
-Compares the performance of different linkage and affinity metrics with several cluster numbers. 
+Compares the performance of different linkage and distance measures with several cluster numbers. 
 Visualizes cluster hierarchies as dendrograms and real-vs-predicted cluster labels as confusion matrixes.
 
 ## Create virtual environment and install requirements
@@ -13,7 +13,7 @@ pip3 install -r requirements.txt
 See the `--help` option of the main script
 ```
 source venv/bin/activate
-python3 src/main.py --help
+python3 main.py --help
 ```
 
 ### PARAMETERS
@@ -37,7 +37,9 @@ Or
 | --- | --- | --- | --- | --- |
 | __4.9__ | __3.0__ | __1.4__ | __0.2__ | __setosa__ |
 
-It should be noted that only the numerical data is used in the clustering, so columns with text-data will be dropped. Also, rows with `Nan`-values will be dropped.
+Examples of use can be found in the `results`-folder, which have been archived using the iris dataset in the file `iris.data`.
+
+It should be noted that only the numerical data is used in the clustering, so columns with text-data will be converted to categorical data. Also, rows with `Nan`-values will be dropped.
 
 If a column give by the  `class_column` is not found in the data, the script will not use any class labels. If you use a headerless `file` and want to use labels, use the order number of the column (from 1 to the number of columns).
 The `class_column` can contain either labels or encoded numerically. If the column contains text-labels, they will be visible in the images too. You can give multiple datafiles and class labels at the same time. 
